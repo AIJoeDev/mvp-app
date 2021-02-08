@@ -1,0 +1,43 @@
+{
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
+  "functions": {
+    "source": "functions",
+    "predeploy": [
+      "npm --prefix src run lint && npm --prefix src run build && rm -rf functions/nuxt && cp -r src/nuxt/ functions/nuxt/ && cp src/nuxt.config.js functions/ && npm --prefix functions run lint"
+    ]
+  },
+  "hosting": {
+    "predeploy": [
+      "rm -rf public/* && mkdir -p public/_nuxt && cp -a src/nuxt/dist/client/. public/_nuxt && cp -a src/static/. public/ && cp -a public_base/. public/"
+    ],
+    "public": "public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "function": "ssrapp"
+      }
+    ]
+  },
+  "emulators": {
+    "functions": {
+      "port": 5001
+    },
+    "firestore": {
+      "port": 8080
+    },
+    "hosting": {
+      "port": 5000
+    },
+    "ui": {
+      "enabled": true
+    }
+  }
+}
