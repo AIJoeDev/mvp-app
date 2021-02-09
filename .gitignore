@@ -156,3 +156,12 @@ sw.*
 
 # Vim swap files
 *.swp
+
+# public buildDir path
+_nuxt
+
+# buildDir path
+nuxt
+
+# package assembly build output path
+public

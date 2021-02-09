@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "exercise-health"
+  },
+  "targets": {
+    "exercise-health": {
+      "hosting": {
+        "app": [
+          "exercise-health"
+        ]
+      }
+    }
   }
 }

@@ -7,11 +7,13 @@
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
-    "lint:js": "eslint --ext \".js,.vue\" --ignore-path .gitignore .",
-    "lint": "yarn lint:js",
+    "lint:js": "eslint --ext \".js,.vue\"",
     "test": "yarn test:unit && yarn test:e2e",
     "test:unit": "cross-env TEST=unit ava ./test/specs/**/*",
-    "test:e2e": "cross-env TEST=e2e ava ./test/e2e/**/*"
+    "test:e2e": "cross-env TEST=e2e ava ./test/e2e/**/*",
+    "ci": "yarn lint:js && yarn build && yarn test:unit && yarn predeploy:functions && yarn predeploy:hosting",
+    "predeploy:functions": "cd .. && rm -rf functions/nuxt && cp -r src/nuxt/ functions/nuxt/ && cp src/nuxt.config.js  functions/ && cd functions && yarn lint:js",
+    "predeploy:hosting": "cd .. && rm -rf public/* && mkdir -p public/_nuxt && cp -a src/nuxt/dist/client/. public/_nuxt && cp -a src/static/. public/"
   },
   "lint-staged": {
     "*.{js,vue}": "eslint"
